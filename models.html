@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>AVERA Models - Explore Full Range</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f3f2ee;
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    /* MODELS SECTION */
+    .models {
+      transition: background 0.6s ease;
+      padding: 75px 0 55px;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .models .container {
+      width: 100vw;
+      max-width: 100vw;
+      margin: 0;
+      padding: 0;
+    }
+
+    .section-title {
+      font-size: 30px;
+      font-weight: 300;
+      margin-bottom: 50px;
+      letter-spacing: -.5px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+
+    .tabs span {
+      cursor: pointer;
+      transition: .3s ease;
+    }
+
+    .tabs span.active {
+      color: #111;
+      font-weight: 500;
+    }
+
+    /* CAR WRAPPER */
+    .car-wrapper {
+      position: relative;
+      width: 100vw;
+      max-width: 100vw;
+      margin: auto;
+      overflow: hidden;
+      height: 360px;
+      cursor: grab;
+      touch-action: pan-y;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .car-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .car-wrapper img {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-touch-callout: none;
+      max-width: 1400px;
+      width: 100%;
+      height: 450px;
+      object-fit: contain;
+      filter: drop-shadow(0 25px 35px rgba(0,0,0,.18));
+      transition: transform .7s cubic-bezier(.77,0,.18,1), opacity .7s ease;
+      opacity: 1;
+    }
+
+    /* EXIT ANIMATIONS - Current image leaving */
+    .slide-out-to-left {
+      transform: translateX(-140%);
+      opacity: 0;
+    }
+
+    .slide-out-to-right {
+      transform: translateX(140%);
+      opacity: 0;
+    }
+
+    /* ENTRY POSITIONS - New image coming from */
+    .slide-in-from-left {
+      transform: translateX(-140%);
+      opacity: 0;
+    }
+
+    .slide-in-from-right {
+      transform: translateX(140%);
+      opacity: 0;
+    }
+
+    /* ACTIVE CENTER */
+    .active-slide {
+      transform: translateX(0%);
+      opacity: 1;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.18);
+      color: #111;
+      font-size: 30px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      z-index: 20;
+      transition: transform .3s ease, background .3s ease, opacity .3s ease;
+    }
+
+    .arrow:hover {
+      transform: translateY(-50%) scale(1.08);
+      background: rgba(255,255,255,.22);
+    }
+
+    .arrow.left {
+      left: 40px;
+    }
+
+    .arrow.right {
+      right: 40px;
+    }
+
+    .specs {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      font-size: 12px;
+      color: #444;
+      transition: .4s ease;
+    }
+
+    .specs div span {
+      display: block;
+      font-size: 20px;
+      color: #111;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    /* SPECS WRAPPER */
+    .specs-wrapper {
+      margin-top: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 45px;
+      flex-wrap: wrap;
+    }
+
+    /* LEFT IMAGE */
+    .spec-side-image img {
+      width: 125px;
+      height: 125px;
+      object-fit: contain;
+      filter: brightness(0);
+    }
+
+    /* FEATURES */
+    .specs {
+      margin-top: 0;
+    }
+
+    /* BUTTON */
+    .explore-btn {
+      border: none;
+      background: #111;
+      color: white;
+      padding: 14px 26px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: .3s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .explore-btn:hover {
+      transform: translateY(-2px);
+      background: #000;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .car-wrapper {
+        height: 320px;
+      }
+      .car-wrapper img {
+        height: 360px;
+        max-width: 900px;
+      }
+      .arrow.left {
+        left: 15px;
+      }
+      .arrow.right {
+        right: 15px;
+      }
+      .specs-wrapper {
+        gap: 25px;
+        padding: 0 20px;
+      }
+      .specs {
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+      .spec-side-image img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .models {
+        padding: 60px 0 40px;
+      }
+      .section-title {
+        font-size: 22px;
+        margin-bottom: 30px;
+      }
+      .car-wrapper {
+        height: 260px;
+      }
+      .car-wrapper img {
+        height: 280px;
+        max-width: 100%;
+      }
+      .arrow {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+      }
+      .arrow.left {
+        left: 10px;
+      }
+      .arrow.right {
+        right: 10px;
+      }
+      .specs-wrapper {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+      .spec-side-image img {
+        width: 85px;
+        height: 85px;
+      }
+      .specs {
+        justify-content: center;
+        gap: 18px;
+      }
+      .specs div span {
+        font-size: 18px;
+      }
+      .explore-btn {
+        padding: 12px 22px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .car-wrapper {
+        height: 220px;
+      }
+      .car-wrapper img {
+        height: 240px;
+      }
+      .specs {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .section-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<section class="models" id="modelsSection">
+  <div class="container">
+    
+    <h2 class="section-title">Explore the full range of AVERA models</h2>
+
+    <div class="tabs" id="tabs"></div>
+
+    <div class="car-wrapper" id="carWrapper">
+      <div class="arrow left">&#10094;</div>
+      <img id="car-image" src="images/Car images/vehicle-slider-ec6-desktop.png" alt="car">
+      <div class="arrow right">&#10095;</div>
+    </div>
+
+    <div class="specs-wrapper">
+      <!-- LEFT IMAGE -->
+      <div class="spec-side-image">
+        <img id="vehicle-icon" src="images/Car images/EC7-WM-Home.svg" alt="">
+      </div>
+
+      <!-- FEATURES -->
+      <div class="specs">
+        <div><span id="range">620</span>km range</div>
+        <div><span id="speed">3.8s</span>0-100 km/h</div>
+        <div><span id="battery">150</span>kWh battery</div>
+        <div><span id="electric">100%</span>electric</div>
+      </div>
+
+      <!-- BUTTON -->
+      <div class="spec-btn-wrap">
+        <a id="explore-btn" class="explore-btn">Explore More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const vehicles = [
+    {
+      name: "EC7",
+      image: "images/Car images/vehicle-slider-ec6-desktop.png",
+      icon: "images/Car images/EC7-WM-Home.svg",
+      link: "#",
+      range: "620",
+      speed: "3.8s",
+      battery: "150",
+      electric: "100%",
+      color: "#e9e1e5"
+    },
+    {
+      name: "ES7",
+      image: "images/Car images/1731039745119-vehicleSlider.vehicles.1.image.desktop-3429C4B9824B8BAC.png",
+      icon: "images/Car images/ES7-WM-Home.svg",
+      link: "#",
+      range: "580",
+      speed: "4.2s",
+      battery: "120",
+      electric: "100%",
+      color: "#77797f"
+    },
+    {
+      name: "ET7",
+      image: "images/Car images/1748070358065-newVehicleSlider.vehicles.0.image.desktop-2B9F2CC1C3C4782F.png",
+      icon: "images/Car images/ET7-WM-Home.svg",
+      link: "#",
+      range: "710",
+      speed: "3.5s",
+      battery: "150",
+      electric: "100%",
+      color: "#717377"
+    },
+    {
+      name: "ET9",
+      image: "images/Car images/1747228985834-newVehicleSlider.vehicles.4.image.desktop-64DF7868C5369858.png",
+      icon: "images/Car images/et9-top-nav-wordmark.svg",
+      link: "#",
+      range: "840",
+      speed: "3.1s",
+      battery: "180",
+      electric: "100%",
+      color: "#b1b2b6"
+    }
+  ];
+
+  let current = 0;
+  let isAnimating = false;
+  let carImage = document.getElementById("car-image");
+  const left = document.querySelector(".arrow.left");
+  const right = document.querySelector(".arrow.right");
+  const modelsSection = document.getElementById("modelsSection");
+  const rangeEl = document.getElementById("range");
+  const speedEl = document.getElementById("speed");
+  const batteryEl = document.getElementById("battery");
+  const electricEl = document.getElementById("electric");
+  const exploreBtn = document.getElementById("explore-btn");
+  const vehicleIcon = document.getElementById("vehicle-icon");
+  const tabsContainer = document.getElementById("tabs");
+  const carWrapper = document.getElementById("carWrapper");
+
+
+
+
+  // Create tabs
+  vehicles.forEach((vehicle, index) => {
+    const tab = document.createElement("span");
+    tab.innerText = vehicle.name;
+    if(index === 0) tab.classList.add("active");
+    tab.addEventListener("click", () => {
+      if(index !== current && !isAnimating) {
+        changeCar(index > current ? "next" : "prev", index);
+      }
+    });
+    tabsContainer.appendChild(tab);
+  });
+
+
+
+  function updateTabs() {
+    const tabs = document.querySelectorAll(".tabs span");
+    tabs.forEach((tab, index) => {
+      tab.classList.toggle("active", index === current);
+    });
+  }
+
+  function updateSpecs() {
+    rangeEl.innerText = vehicles[current].range;
+    speedEl.innerText = vehicles[current].speed;
+    batteryEl.innerText = vehicles[current].battery;
+    electricEl.innerText = vehicles[current].electric;
+    vehicleIcon.src = vehicles[current].icon;
+    exploreBtn.href = vehicles[current].link;
+    modelsSection.style.background = vehicles[current].color;
+  }
+
+
+  
+  function changeCar(action, nextIndex = null) {
+  if (isAnimating) return;
+
+  isAnimating = true;
+
+  let next;
+
+  if (nextIndex !== null) {
+    next = nextIndex;
+  } else {
+    next =
+      action === "next"
+        ? (current + 1) % vehicles.length
+        : (current - 1 + vehicles.length) % vehicles.length;
+  }
+
+  // CREATE NEW IMAGE
+  const newImage = document.createElement("img");
+  newImage.src = vehicles[next].image;
+  newImage.alt = vehicles[next].name;
+  newImage.draggable = false;
+
+  // RESET ALL POSSIBLE CLASSES
+  carImage.className = "";
+  newImage.className = "";
+
+  // DIRECTION LOGIC
+  if (action === "next") {
+    // current -> left
+    // new -> from right
+    carImage.classList.add("slide-out-to-left");
+    newImage.classList.add("slide-in-from-right");
+  } else {
+    // current -> right
+    // new -> from left
+    carImage.classList.add("slide-out-to-right");
+    newImage.classList.add("slide-in-from-left");
+  }
+
+  carWrapper.appendChild(newImage);
+
+  // FORCE REFLOW
+  void newImage.offsetWidth;
+
+  requestAnimationFrame(() => {
+    newImage.classList.remove(
+      "slide-in-from-right",
+      "slide-in-from-left"
+    );
+
+    newImage.classList.add("active-slide");
+  });
+
+
+  setTimeout(() => {
+  carImage.remove();
+
+  newImage.id = "car-image";
+  newImage.classList.remove("active-slide");
+
+  carImage = newImage;
+  current = next;
+
+  updateSpecs();
+  updateTabs();
+
+  // Wait slightly longer for background transition
+  setTimeout(() => {
+    isAnimating = false;
+  }, 350);
+
+}, 700);
+
+}
+
+
+
+// RIGHT ARROW
+right.addEventListener("touchend", (e) => {
+  e.preventDefault();
+
+  if (isAnimating) return;
+
+  changeCar(
+    "prev",
+    (current + 1) % vehicles.length
+  );
+});
+
+right.addEventListener("click", (e) => {
+  if ("ontouchstart" in window) return;
+
+  if (isAnimating) return;
+
+  changeCar(
+    "prev",
+    (current + 1) % vehicles.length
+  );
+});
+
+// LEFT ARROW
+left.addEventListener("touchend", (e) => {
+  e.preventDefault();
+
+  if (isAnimating) return;
+
+  changeCar(
+    "next",
+    (current - 1 + vehicles.length) % vehicles.length
+  );
+});
+
+left.addEventListener("click", (e) => {
+  if ("ontouchstart" in window) return;
+
+  if (isAnimating) return;
+
+  changeCar(
+    "next",
+    (current - 1 + vehicles.length) % vehicles.length
+  );
+});
+
+
+  // TOUCH SWIPE
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+  let isSwiping = false;
+
+  let recentlyTouched = false;
+
+  // ADD THIS
+setTimeout(() => {
+  recentlyTouched = false;
+}, 300);
+  
+  function handleTouchStart(e) {
+    if(isAnimating) return;
+
+    // ADD THIS
+    recentlyTouched = true;
+
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isSwiping = true;
+  }
+  
+  function handleTouchMove(e) {
+    if(!isSwiping || isAnimating) return;
+    
+    touchEndX = e.touches[0].clientX;
+    touchEndY = e.touches[0].clientY;
+    
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
+    
+    // Prevent page scroll only when horizontal swipe detected
+    if(Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+      e.preventDefault();
+    }
+  }
+  
+  function handleTouchEnd(e) {
+    if(!isSwiping || isAnimating) {
+      isSwiping = false;
+      return;
+    }
+    
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
+    
+    // Only trigger swipe for significant horizontal movement
+    if(Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+      if(diffX > 0) {
+        // Swiped LEFT -> Show NEXT vehicle
+        if(!isAnimating) changeCar("next");
+      } else {
+        // Swiped RIGHT -> Show PREVIOUS vehicle
+        if(!isAnimating) changeCar("prev");
+      }
+    }
+    
+    // Reset values
+    touchStartX = 0;
+    touchStartY = 0;
+    touchEndX = 0;
+    touchEndY = 0;
+    isSwiping = false;
+  }
+  
+  // MOUSE DRAG
+  let mouseStartX = 0;
+  let isMouseDown = false;
+  
+  function handleMouseDown(e) {
+    if(isAnimating) return;
+    e.preventDefault();
+    mouseStartX = e.clientX;
+    isMouseDown = true;
+    carWrapper.style.cursor = "grabbing";
+  }
+  
+  function handleMouseMove(e) {
+    if(!isMouseDown || isAnimating) return;
+    
+    const diffX = mouseStartX - e.clientX;
+    
+    // Only trigger if significant movement
+    if(Math.abs(diffX) > 30) {
+      if(diffX > 0) {
+        // Dragged LEFT -> Show NEXT vehicle
+        changeCar("next");
+      } else {
+        // Dragged RIGHT -> Show PREVIOUS vehicle
+        changeCar("prev");
+      }
+      isMouseDown = false;
+      carWrapper.style.cursor = "grab";
+    }
+  }
+  
+  function handleMouseUp() {
+    if(isMouseDown) {
+      isMouseDown = false;
+      carWrapper.style.cursor = "grab";
+    }
+  }
+  
+  // Add touch event listeners with proper options
+  carWrapper.addEventListener("touchstart", handleTouchStart, { passive: false });
+  carWrapper.addEventListener("touchmove", handleTouchMove, { passive: false });
+  carWrapper.addEventListener("touchend", handleTouchEnd);
+  carWrapper.addEventListener("touchcancel", () => {
+    isSwiping = false;
+    isMouseDown = false;
+  });
+  
+  // Mouse events
+  carWrapper.addEventListener("mousedown", handleMouseDown);
+  window.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("mouseup", handleMouseUp);
+  
+  // Prevent drag on images
+  carWrapper.addEventListener("dragstart", (e) => e.preventDefault());
+  
+  // Prevent context menu on images
+  document.querySelectorAll(".car-wrapper img").forEach(img => {
+    img.addEventListener("contextmenu", (e) => e.preventDefault());
+  });
+  
+  // Initialize with proper cursor
+  carWrapper.style.cursor = "grab";
+  
+  // Initial update
+  updateSpecs();
+</script>
+
+</body>
+</html>
