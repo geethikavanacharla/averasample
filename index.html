@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -963,10 +963,10 @@
     <div class="hero-content">
       
 
-      <img
+  <img
   id="hero-model-image"
   class="hero-model-image"
-images/Car%20images/ET7-WM-Home.svg
+  src="images/Car images/ET7-WM-Home.svg"
   alt="AVERA Model" />
 
       <a class="btn" href="#">Learn More</a>
@@ -1009,14 +1009,14 @@ images/Car%20images/ET7-WM-Home.svg
 
     <div class="car-wrapper" id="carWrapper">
       <div class="arrow left">&#10094;</div>
-src="images/Car%20images/vehicle-slider-ec6-desktop.png"
+      <img id="car-image" src="images/Car images/vehicle-slider-ec6-desktop.png" alt="car">
       <div class="arrow right">&#10095;</div>
     </div>
 
     <div class="specs-wrapper">
       <!-- LEFT IMAGE -->
       <div class="spec-side-image">
-src="images/Car%20images/EC7-WM-Home.svg"
+        <img id="vehicle-icon" src="images/Car images/EC7-WM-Home.svg" alt="">
       </div>
 
       <!-- FEATURES -->
@@ -1305,25 +1305,25 @@ src="images/Car%20images/EC7-WM-Home.svg"
 
 const heroVideos = [
 
-  "images/Car%20images/2025-ET5T-desktop.mp4",
+  "images/Car images/2025-ET5T-desktop.mp4",
 
-  "images/Car%20images/2025-ET5-desktop.mp4",
+  "images/Car images/2025-ET5-desktop.mp4",
 
-  "images/Car%20images/2025-EC6-desktop.mp4",
+  "images/Car images/2025-EC6-desktop.mp4",
 
-  "images/Car%20images/2025-ES6-desktop.mp4"
+  "images/Car images/2025-ES6-desktop.mp4"
 
 ];
 
 const heroModelImages = [
 
-  "images/Car%20images/ET7-WM-Home.svg",
+  "images/Car images/ET7-WM-Home.svg",
 
-  "images/Car%20images/ET5-WM-Home.svg",
+  "images/Car images/ET5-WM-Home.svg",
 
-  "images/Car%20images/ET5t-WM-Home.svg",
+  "images/Car images/ET5t-WM-Home.svg",
 
-  "images/Car%20images/ES7-WM-Home.svg"
+  "images/Car images/ES7-WM-Home.svg"
 
 ];
 
@@ -1345,6 +1345,33 @@ const heroModelImage =
 /* ================= LOAD FIRST VIDEO ================= */
 
 activeVideo.src = heroVideos[0];
+
+// Ensure correct URLs when site is hosted in a subfolder on GitHub Pages (like /averasample/)
+const BASE_URL = document.baseURI.endsWith('/') ? document.baseURI : document.baseURI + '/';
+
+function withBase(path) {
+  // If already absolute (starts with http) return as-is.
+  if (/^https?:\/\//i.test(path)) return path;
+  return BASE_URL + path.replace(/^\/?/, '');
+}
+
+// Rewrite all video/image sources to be base-url aware
+for (const v of document.querySelectorAll('.hero-video')) {
+  if (v.getAttribute('data-src') !== undefined) continue;
+}
+
+
+// Debug: helps detect missing/blocked video URLs on GitHub Pages
+activeVideo.onerror = () => {
+  console.error("Hero video failed to load:", activeVideo.src);
+};
+
+nextVideo.onerror = () => {
+  console.error("Next hero video failed to load:", nextVideo.src);
+};
+
+activeVideo.preload = "auto";
+nextVideo.preload = "auto";
 
 heroModelImage.src =
   heroModelImages[0];
