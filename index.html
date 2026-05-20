@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AVERA Inspired Landing Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    html {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      overflow-y: scroll;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      width: 0px;
+      display: none;
+      background: transparent;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f3f2ee;
+      color: #111;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+
+    .hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+}
+
+/* .hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  z-index: 0; */
+
+  /* 🔥 prevents weird overflow on some screens */
+  /* transform: scale(1.01);
+} */
+
+
+.hero-video-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+
+   width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  opacity: 0;
+
+  transition: opacity 2.6s cubic-bezier(.77,0,.18,1);
+
+  z-index: 1;
+}
+
+.hero-video.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.hero-video.next {
+  opacity: 0;
+  z-index: 1;
+}
+
+
+
+
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 16px 160px; /*160px*/
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      z-index: 1000;
+      transition: all .35s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 18px rgba(0,0,0,.06);
+      padding: 12px 160px;
+    }
+
+    nav.scrolled .logo,
+    nav.scrolled .nav-links a {
+      color: #111;
+    }
+
+    .logo,
+    .nav-links a {
+      color: white;
+      transition: color .3s ease;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 54px;
+      margin-left: 180px;
+      font-size: 12px;
+      opacity: .95;
+    }
+
+    .hero-content {
+      position: absolute;
+      left: 60px;
+      bottom: 90px;
+      max-width: 420px;
+    }
+
+
+    .hero-content {
+
+  animation: heroFloat 5s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
+    .hero-model-image {
+
+  width: 320px;
+
+  max-width: 90%;
+
+  object-fit: contain;
+
+  margin-bottom: 28px;
+
+  opacity: 1;
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.hero-model-image.fade-out {
+
+  opacity: 0;
+
+  transform: translateY(10px);
+}
+
+
+    .hero-content h1 {
+      font-size: 70px;
+      font-weight: 300;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+    }
+
+    .hero-content p {
+      font-size: 15px;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,.75);
+      padding: 12px 22px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      transition: .3s ease;
+    }
+
+    .btn:hover {
+      background: white;
+      color: black;
+    }
+
+
+    /* VIDEO PROGRESS BAR */
+
+/* VIDEO PROGRESS */
+
+.video-progress {
+
+  margin-top: 28px;
+
+  display: flex;
+  gap: 10px;
+}
+
+.progress-wrapper {
+
+  width: 45px;
+  height: 2px;
+
+  background: rgba(255,255,255,0.25);
+
+  overflow: hidden;
+  border-radius: 50px;
+
+  position: relative;
+}
+
+.progress-indicator {
+
+  position: absolute;
+  inset: 0;
+
+  width: 0%;
+
+  background: white;
+
+  border-radius: 50px;
+
+  transition: width linear;
+}
+
+@keyframes videoProgress {
+
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+
+}
+
+/*============================== THIS IS HERO END ===============================*/
+
+
+
+  
+/*================================ THIS IS START OF MODELS CSS ===========================*/
+
+/* MODELS SECTION */
+   
+
+/*================================ THIS IS START OF MODELS CSS ===========================*/
+
+/* MODELS SECTION */
+.models {
+  transition: background 0.6s ease;
+  margin-top: 10px;
+  padding: 75px 0 55px;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.models .container {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+.section-title {
+  font-size: 30px;
+  font-weight: 300;
+  margin-bottom: 50px;
+  letter-spacing: -.5px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.tabs span {
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+.tabs span.active {
+  color: #111;
+  font-weight: 500;
+}
+
+/* CAR WRAPPER */
+.car-wrapper {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  margin: auto;
+  overflow: hidden;
+  height: 360px;
+  cursor: grab;
+  touch-action: pan-y;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-wrapper:active {
+  cursor: grabbing;
+}
+
+.car-wrapper img {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  max-width: 1400px;
+  width: 100%;
+  height: 450px;
+  object-fit: contain;
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,.18));
+  transition: transform .7s cubic-bezier(.77,0,.18,1), opacity .7s ease;
+  opacity: 1;
+}
+
+/* EXIT ANIMATIONS */
+.slide-out-to-left {
+  transform: translateX(-140%);
+  opacity: 0;
+}
+
+.slide-out-to-right {
+  transform: translateX(140%);
+  opacity: 0;
+}
+
+/* ENTRY */
+.slide-in-from-left {
+  transform: translateX(-140%);
+  opacity: 0;
+}
+
+.slide-in-from-right {
+  transform: translateX(140%);
+  opacity: 0;
+}
+
+/* ACTIVE */
+.active-slide {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.18);
+  color: #111;
+  font-size: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  z-index: 20;
+  transition: transform .3s ease, background .3s ease, opacity .3s ease;
+}
+
+.arrow:hover {
+  transform: translateY(-50%) scale(1.08);
+  background: rgba(255,255,255,.22);
+}
+
+.arrow.left {
+  left: 40px;
+}
+
+.arrow.right {
+  right: 40px;
+}
+
+.specs {
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  font-size: 12px;
+  color: #444;
+  transition: .4s ease;
+}
+
+.specs div span {
+  display: block;
+  font-size: 20px;
+  color: #111;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.specs-wrapper {
+  margin-top: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 45px;
+  flex-wrap: wrap;
+}
+
+.spec-side-image img {
+  width: 125px;
+  height: 125px;
+  object-fit: contain;
+  filter: brightness(0);
+}
+
+.specs {
+  margin-top: 0;
+}
+
+.explore-btn {
+  border: none;
+  background: #111;
+  color: white;
+  padding: 14px 26px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: .3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.explore-btn:hover {
+  transform: translateY(-2px);
+  background: #000;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+
+  .car-wrapper {
+    height: 320px;
+  }
+
+  .car-wrapper img {
+    height: 360px;
+    max-width: 900px;
+  }
+
+  .arrow.left {
+    left: 15px;
+  }
+
+  .arrow.right {
+    right: 15px;
+  }
+
+  .specs-wrapper {
+    gap: 25px;
+    padding: 0 20px;
+  }
+
+  .specs {
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  .spec-side-image img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .models {
+    padding: 60px 0 40px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  .car-wrapper {
+    height: 260px;
+  }
+
+  .car-wrapper img {
+    height: 280px;
+    max-width: 100%;
+  }
+
+  .arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .arrow.left {
+    left: 10px;
+  }
+
+  .arrow.right {
+    right: 10px;
+  }
+
+  .specs-wrapper {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .spec-side-image img {
+    width: 85px;
+    height: 85px;
+  }
+
+  .specs {
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .specs div span {
+    font-size: 18px;
+  }
+
+  .explore-btn {
+    padding: 12px 22px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .car-wrapper {
+    height: 220px;
+  }
+
+  .car-wrapper img {
+    height: 240px;
+  }
+
+  .specs {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+}
+
+/*======================================= THIS IS END OF MODELS CSS ============================= */
+
+/*======================================= THIS IS END OF MODELS CSS ============================= */
+
+
+
+
+
+
+
+
+
+
+
+    /* GRID SECTION */
+    .discover {
+      padding: 100px 0;
+      background: #efefeb;
+    }
+
+    .discover-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      margin-top: 60px;
+    }
+
+    .discover-left img {
+      height: 520px;
+    }
+
+    .discover-right {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: white;
+    }
+
+    .card img {
+      height: 100%;
+      transition: .5s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.04);
+    }
+
+    .card-content {
+      position: absolute;
+      left: 20px;
+      bottom: 18px;
+      color: white;
+      z-index: 2;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.55));
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .card p {
+      font-size: 12px;
+      opacity: .9;
+    }
+
+    /* SPLIT SECTION */
+    .split-section {
+      padding: 110px 0;
+      background: #f4f3ef;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 120px;
+    }
+
+    .split.reverse {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .split.reverse .text {
+      order: 2;
+    }
+
+    .split.reverse .visual {
+      order: 1;
+    }
+
+    .text h2 {
+      font-size: 44px;
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+
+    .text p {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 26px;
+      max-width: 380px;
+    }
+
+    .dark-btn {
+      border: 1px solid #111;
+      padding: 12px 22px;
+      font-size: 12px;
+      display: inline-block;
+    }
+
+    .visual img {
+      height: 500px;
+    }
+
+    /* STORIES */
+    .stories {
+      padding: 100px 0;
+      background: white;
+    }
+
+    .stories-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .story-card img {
+      height: 240px;
+      margin-bottom: 18px;
+    }
+
+    .story-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .story-card p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    /* NIO HOUSE */
+    .house {
+      background: #090909;
+      color: white;
+      padding: 120px 0;
+      text-align: center;
+    }
+
+    .house-banner {
+      height: 460px;
+      margin-bottom: 60px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .house h2 {
+      font-size: 52px;
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+
+    .house p {
+      max-width: 720px;
+      margin: auto;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 60px;
+    }
+
+    .house-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-bottom: 40px;
+    }
+
+    .house-item img {
+      height: 220px;
+      margin-bottom: 14px;
+    }
+
+    .house-item h4 {
+      margin-bottom: 6px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .house-item span {
+      color: rgba(255,255,255,.65);
+      font-size: 13px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #f5f5f2;
+      padding: 80px 0 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 40px;
+      margin-bottom: 70px;
+    }
+
+    footer h5 {
+      margin-bottom: 16px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer li {
+      margin-bottom: 12px;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #ddd;
+      padding-top: 24px;
+      color: #777;
+      font-size: 13px;
+    }
+
+    @media(max-width: 980px) {
+      .discover-grid,
+      .split,
+      .split.reverse,
+      .stories-grid,
+      .house-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .split.reverse .text,
+      .split.reverse .visual {
+        order: initial;
+      }
+
+      .discover-right {
+        grid-template-rows: auto;
+      }
+
+      nav {
+        padding: 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-content {
+        left: 24px;
+        bottom: 50px;
+      }
+
+      .hero-content h1 {
+        font-size: 48px;
+      }
+
+      .specs {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    
+
+  <div class="hero-video-container">
+
+  <video class="hero-video active"
+    muted
+    playsinline>
+  </video>
+
+  <video class="hero-video"
+    muted
+    playsinline>
+  </video>
+
+</div>
+
+
+    <div class="hero-overlay"></div>
+    <nav>
+      <div class="logo">AVERA</div>
+
+      <div class="nav-links">
+        <a href="#">Products</a>
+        <a href="#">Innovation</a>
+        <a href="#">Power&Service</a>
+        <a href="#">Community</a>
+        <a href="#">Blogs</a>
+        <a href="#">About AVERA</a>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      
+
+      <img
+  id="hero-model-image"
+  class="hero-model-image"
+src="images/Car%20images/ET7-WM-Home.svg"
+  alt="AVERA Model" />
+
+      <a class="btn" href="#">Learn More</a>
+      
+
+      <!-- VIDEO PROGRESS -->
+       <div class="video-progress">
+
+  <span class="progress-wrapper active">
+    <span class="progress-indicator"></span>
+  </span>
+
+  <span class="progress-wrapper">
+    <span class="progress-indicator"></span>
+  </span>
+
+  <span class="progress-wrapper">
+    <span class="progress-indicator"></span>
+  </span>
+
+  <span class="progress-wrapper">
+    <span class="progress-indicator"></span>
+  </span>
+
+</div>
+
+
+    </div>
+    
+  </section>
+
+  <!-- /*============================= THIS IS mODELS HTML CODE =============================*/ -->
+
+  <section class="models" id="modelsSection">
+  <div class="container">
+    
+    <h2 class="section-title">Explore the full range of AVERA models</h2>
+
+    <div class="tabs" id="tabs"></div>
+
+    <div class="car-wrapper" id="carWrapper">
+      <div class="arrow left">&#10094;</div>
+      <img id="car-image" src="images/Car images/vehicle-slider-ec6-desktop.png" alt="car">
+      <div class="arrow right">&#10095;</div>
+    </div>
+
+    <div class="specs-wrapper">
+      <!-- LEFT IMAGE -->
+      <div class="spec-side-image">
+        <img id="vehicle-icon" src="images/Car images/EC7-WM-Home.svg" alt="">
+      </div>
+
+      <!-- FEATURES -->
+      <div class="specs">
+        <div><span id="range">620</span>km range</div>
+        <div><span id="speed">3.8s</span>0-100 km/h</div>
+        <div><span id="battery">150</span>kWh battery</div>
+        <div><span id="electric">100%</span>electric</div>
+      </div>
+
+      <!-- BUTTON -->
+      <div class="spec-btn-wrap">
+        <a id="explore-btn" class="explore-btn">Explore More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- /*=============================== THIS IS END OF THE MODELS CODE =================================*/ -->
+
+
+  <section class="discover">
+    <div class="container">
+
+      <h2 class="section-title">Discover the world of AVERA</h2>
+
+      <div class="discover-grid">
+
+        <div class="discover-left card">
+          <img src="images\Car images\1755792899719-topSlider.items.6.image.desktop-09A640B10AD226A8.jpg">
+
+          <div class="card-content">
+            <h3>ES8</h3>
+            <p>Flagship Electric SUV</p>
+          </div>
+        </div>
+
+        <div class="discover-right">
+
+          <div class="card">
+            <img src="images\Car images\1758527007129-bslSection.explore.items.3.src-83EBDEDDAD110985.jpg">
+
+            <div class="card-content">
+              <h3>Grow with the Light</h3>
+              <p>AVERA Day 2025</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="images\Car images\1748178222116-topSlider.items.0.image.desktop-496E2DEB2091E869.jpg">
+
+            <div class="card-content">
+              <h3>EP9</h3>
+              <p>The fastest electric race car</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="images\Car images\1748178330338-topSlider.items.1.image.desktop-CAC4C71CA9CF9C40.jpg">
+
+            <div class="card-content">
+              <h3>AVERA Anniversary</h3>
+              <p>11 years of innovation</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split-section">
+    <div class="container">
+
+      <div class="split">
+
+        <div class="text">
+          <h2>AVERA Power</h2>
+
+          <p>
+            A holistic power service with chargeable, swappable and
+            upgradeable batteries for AVERA users.
+          </p>
+
+          <a href="#" class="dark-btn">Learn More</a>
+        </div>
+
+        <div class="visual">
+          <img src="images\Car images\1703335965784-nioPower.banner.mobile-B7DB1163E0406766.jpg">
+        </div>
+
+      </div>
+
+      <div class="split reverse">
+
+        <div class="text">
+          <h2>AVERA Service</h2>
+
+          <p>
+            A reassuring service experience enabled by AVERA's cloud
+            technology and smart mobility ecosystem.
+          </p>
+
+          <a href="#" class="dark-btn">Learn More</a>
+        </div>
+
+        <div class="visual">
+          <img src="images\Car images\1700471434837-nioPower.sliders.2.src.mobile-FDA9228968D017DB.jpg">
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="stories">
+    <div class="container">
+
+      <div class="stories-top">
+        <h2 class="section-title">Latest Blogs</h2>
+        <a href="#">View all Blogs →</a>
+      </div>
+
+      <div class="stories-grid">
+
+        <div class="story-card">
+          <img src="images\Car images\1755792899719-topSlider.items.6.image.desktop-09A640B10AD226A8.jpg">
+
+          <h3>AVERA ET9 Makes Global Debut</h3>
+
+          <p>
+            The latest generation flagship sedan redefines luxury electric mobility.
+          </p>
+
+          <span>May 10, 2025</span>
+        </div>
+
+        <div class="story-card">
+          <img src="images\Car images\1700471372148-nioPower.sliders.1.src.desktop-64FEA098917176E8.jpg">
+
+          <h3>40 Million Battery Swaps</h3>
+
+          <p>
+            AVERA Power continues to shape the future of sustainable transportation.
+          </p>
+
+          <span>April 28, 2025</span>
+        </div>
+
+        <div class="story-card">
+          <img src="images\Car images\1739883925923-menu.0.menu.5.previewX.image-F83CAAE277FD127D.jpg">
+
+          <h3>AVERA House Expansion</h3>
+
+          <p>
+            A new chapter in premium electric lifestyle experiences across Europe.
+          </p>
+
+          <span>March 22, 2025</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="house">
+    <div class="container">
+
+      <div class="house-banner">
+        <img src="images\Car images\1664508907963-nioHouse.banners.3.mediaSources.0.src-D8AEEAF2E80E8EB8.jpg">
+      </div>
+
+      <h2>AVERA House</h2>
+
+      <p>
+        Welcome to AVERA House, a place where innovative mobility meets lifestyle,
+        creativity, and premium experiences.
+      </p>
+
+      <div class="house-grid">
+
+        <div class="house-item">
+          <img src="images\Car images\1754906291557-newMenu.3.menulist.0.items.1.src-0A87138DC71F9E5B.jpg">
+
+          <h4>Living Cafe</h4>
+          <span>Enjoy coffee and community moments.</span>
+        </div>
+
+        <div class="house-item">
+          <img src="images\Car images\1700471372148-nioPower.sliders.1.src.desktop-64FEA098917176E8.jpg">
+
+          <h4>Gallery</h4>
+          <span>Discover innovative designs.</span>
+        </div>
+
+        <div class="house-item">
+          <img src="images\Car images\1748178330338-topSlider.items.1.image.desktop-CAC4C71CA9CF9C40.jpg">
+
+          <h4>Joycamp</h4>
+          <span>Relax in inspiring creative spaces.</span>
+        </div>
+
+        <div class="house-item">
+          <img src="images\Car images\1700471372148-nioPower.sliders.1.src.desktop-64FEA098917176E8.jpg">
+
+          <h4>Community Chamber</h4>
+          <span>Host premium networking events.</span>
+        </div>
+
+      </div>
+
+      <a class="btn" href="#">Learn More</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div>
+          <h5>Products</h5>
+
+          <ul>
+            <li>ET5</li>
+            <li>ET7</li>
+            <li>ES8</li>
+            <li>EC7</li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Innovation</h5>
+
+          <ul>
+            <li>AVERA Pilot</li>
+            <li>Battery Swap</li>
+            <li>Technology</li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Explore</h5>
+
+          <ul>
+            <li>AVERA House</li>
+            <li>AVERA Power</li>
+            <li>AVERA Service</li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Company</h5>
+
+          <ul>
+            <li>About</li>
+            <li>Newsroom</li>
+            <li>Investors</li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Contact</h5>
+
+          <ul>
+            <li>Support</li>
+            <li>Careers</li>
+            <li>Privacy Policy</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span>© GLOBAL | English</span>
+        <span>AVERA © 2025</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+
+    /* ================= HERO VIDEO SLIDER ================= */
+
+const heroVideos = [
+
+  "images/Car%20images/2025-ET5T-desktop.mp4",
+
+  "images/Car%20images/2025-ET5-desktop.mp4",
+
+  "images/Car%20images/2025-EC6-desktop.mp4",
+
+  "images/Car%20images/2025-ES6-desktop.mp4"
+
+];
+
+const heroModelImages = [
+
+  "images/Car images/ET7-WM-Home.svg",
+
+  "images/Car images/ET5-WM-Home.svg",
+
+  "images/Car images/ET5t-WM-Home.svg",
+
+  "images/Car images/ES7-WM-Home.svg"
+
+];
+
+let currentHeroVideo = 0;
+
+const videos =
+  document.querySelectorAll(".hero-video");
+
+let activeVideo = videos[0];
+let nextVideo = videos[1];
+
+const progressBars =
+  document.querySelectorAll(".progress-indicator");
+
+const heroModelImage =
+  document.getElementById("hero-model-image");
+
+
+/* ================= LOAD FIRST VIDEO ================= */
+
+activeVideo.src = heroVideos[0];
+
+heroModelImage.src =
+  heroModelImages[0];
+
+activeVideo.classList.add("active");
+
+activeVideo.play();
+
+activeVideo.onloadedmetadata = () => {
+
+  startProgressAnimation(
+    activeVideo.duration
+  );
+};
+
+
+/* ================= PROGRESS BAR ================= */
+
+function startProgressAnimation(duration) {
+
+  const activeBar =
+    progressBars[currentHeroVideo];
+
+  activeBar.style.transition = "none";
+  activeBar.style.width = "0%";
+
+  void activeBar.offsetWidth;
+
+  activeBar.style.transition =
+    `width ${duration}s linear`;
+
+  activeBar.style.width = "100%";
+
+}
+
+function changeHeroVideo() {
+
+  progressBars[currentHeroVideo].style.transition =
+    "none";
+
+  progressBars[currentHeroVideo].style.width =
+    "0%";
+
+  currentHeroVideo =
+    (currentHeroVideo + 1) % heroVideos.length;
+
+  if (currentHeroVideo === 0) {
+
+    progressBars.forEach(bar => {
+
+      bar.style.transition = "none";
+      bar.style.width = "0%";
+
+      void bar.offsetWidth;
+
+    });
+
+  }
+
+  nextVideo.src =
+    heroVideos[currentHeroVideo];
+
+  nextVideo.load();
+
+  nextVideo.onloadeddata = () => {
+
+    heroModelImage.classList.add("fade-out");
+
+    setTimeout(() => {
+
+      heroModelImage.src =
+        heroModelImages[currentHeroVideo];
+
+      heroModelImage.classList.remove("fade-out");
+
+    }, 300);
+
+    progressBars[currentHeroVideo].style.width = "0%";
+
+    nextVideo.currentTime = 0;
+
+    nextVideo.play();
+
+    startProgressAnimation(
+      nextVideo.duration
+    );
+
+    nextVideo.classList.add("active");
+
+    activeVideo.classList.remove("active");
+
+    setTimeout(() => {
+
+      activeVideo.pause();
+
+      activeVideo.currentTime = 0;
+
+      activeVideo.dataset.transitioning = "";
+
+      [activeVideo, nextVideo] =
+      [nextVideo, activeVideo];
+
+    }, 1400);
+
+  };
+
+}
+
+function monitorVideoEnd() {
+
+  const remainingTime =
+    activeVideo.duration - activeVideo.currentTime;
+
+  if (
+    remainingTime <= 1.4 &&
+    !activeVideo.dataset.transitioning
+  ) {
+
+    activeVideo.dataset.transitioning = "true";
+
+    changeHeroVideo();
+  }
+
+  requestAnimationFrame(monitorVideoEnd);
+}
+
+monitorVideoEnd();
+
+
+
+
+
+/*===================== VEHICLE MODELS SECTION =============================*/
+
+/*===================== VEHICLE MODELS SECTION =============================*/
+
+const vehicles = [
+  {
+    name: "EC7",
+    image: "images/Car images/vehicle-slider-ec6-desktop.png",
+    icon: "images/Car images/EC7-WM-Home.svg",
+    link: "Pages/explore-models/ec7.html",
+    range: "620",
+    speed: "3.8s",
+    battery: "150",
+    electric: "100%",
+    color: "#e9e1e5"
+  },
+  {
+    name: "ES7",
+    image: "images/Car images/1731039745119-vehicleSlider.vehicles.1.image.desktop-3429C4B9824B8BAC.png",
+    icon: "images/Car images/ES7-WM-Home.svg",
+    link: "Pages/explore-models/es7.html",
+    range: "580",
+    speed: "4.2s",
+    battery: "120",
+    electric: "100%",
+    color: "#c2c3c7"
+  },
+  {
+    name: "ET7",
+    image: "images/Car images/1748070358065-newVehicleSlider.vehicles.0.image.desktop-2B9F2CC1C3C4782F.png",
+    icon: "images/Car images/ET7-WM-Home.svg",
+    link: "Pages/explore-models/et7.html",
+    range: "710",
+    speed: "3.5s",
+    battery: "150",
+    electric: "100%",
+    color: "#b5b7b9"
+  },
+  {
+    name: "ET9",
+    image: "images/Car images/1747228985834-newVehicleSlider.vehicles.4.image.desktop-64DF7868C5369858.png",
+    icon: "images/Car images/et9-top-nav-wordmark.svg",
+    link: "Pages/explore-models/et9.html",
+    range: "840",
+    speed: "3.1s",
+    battery: "180",
+    electric: "100%",
+    color: "#b1b2b6"
+  },
+  {
+    name: "ES9",
+    image: "images/Car images/side view with name/es9/vehicle-slider-preview-desktop.png",
+    icon: "images/Car images/et9-top-nav-wordmark.svg",
+    link: "Pages/explore-models/et9.html",
+    range: "840",
+    speed: "3.1s",
+    battery: "180",
+    electric: "100%",
+    color: "#e1d7ca"
+  },
+  {
+    name: "Es6",
+    image: "images/Car images/side view with name/vehicle-slider-es6-desktop.png",
+    icon: "images/Car images/et9-top-nav-wordmark.svg",
+    link: "Pages/explore-models/et9.html",
+    range: "840",
+    speed: "3.1s",
+    battery: "180",
+    electric: "100%",
+    color: "#adbdc2"
+  }
+];
+
+let current = 0;
+let isAnimating = false;
+
+let carImage =
+  document.getElementById("car-image");
+
+const left =
+  document.querySelector(".arrow.left");
+
+const right =
+  document.querySelector(".arrow.right");
+
+const modelsSection =
+  document.getElementById("modelsSection");
+
+const rangeEl =
+  document.getElementById("range");
+
+const speedEl =
+  document.getElementById("speed");
+
+const batteryEl =
+  document.getElementById("battery");
+
+const electricEl =
+  document.getElementById("electric");
+
+const exploreBtn =
+  document.getElementById("explore-btn");
+
+const vehicleIcon =
+  document.getElementById("vehicle-icon");
+
+const tabsContainer =
+  document.getElementById("tabs");
+
+const carWrapper =
+  document.getElementById("carWrapper");
+
+
+/* CREATE TABS */
+
+vehicles.forEach((vehicle, index) => {
+
+  const tab =
+    document.createElement("span");
+
+  tab.innerText = vehicle.name;
+
+  if(index === 0) {
+    tab.classList.add("active");
+  }
+
+  tab.addEventListener("click", () => {
+
+    if(index !== current && !isAnimating) {
+
+      changeCar(
+        index > current ? "next" : "prev",
+        index
+      );
+
+    }
+
+  });
+
+  tabsContainer.appendChild(tab);
+
+});
+
+
+function updateTabs() {
+
+  const tabs =
+    document.querySelectorAll(".tabs span");
+
+  tabs.forEach((tab, index) => {
+
+    tab.classList.toggle(
+      "active",
+      index === current
+    );
+
+  });
+
+}
+
+
+function updateSpecs() {
+
+  rangeEl.innerText =
+    vehicles[current].range;
+
+  speedEl.innerText =
+    vehicles[current].speed;
+
+  batteryEl.innerText =
+    vehicles[current].battery;
+
+  electricEl.innerText =
+    vehicles[current].electric;
+
+  vehicleIcon.src =
+    vehicles[current].icon;
+
+  exploreBtn.href =
+    vehicles[current].link;
+
+  modelsSection.style.background =
+    vehicles[current].color;
+
+}
+
+
+
+/* ================= CAR CHANGE ================= */
+
+function changeCar(action, nextIndex = null) {
+
+  if (isAnimating) return;
+
+  isAnimating = true;
+
+  let next;
+
+  if (nextIndex !== null) {
+
+    next = nextIndex;
+
+  } else {
+
+    next =
+      action === "next"
+        ? (current + 1) % vehicles.length
+        : (current - 1 + vehicles.length) % vehicles.length;
+
+  }
+
+  const newImage =
+    document.createElement("img");
+
+  newImage.src =
+    vehicles[next].image;
+
+  newImage.alt =
+    vehicles[next].name;
+
+  newImage.draggable = false;
+
+  carImage.className = "";
+  newImage.className = "";
+
+  if (action === "next") {
+
+    /* current -> left */
+    carImage.classList.add(
+      "slide-out-to-left"
+    );
+
+    /* new -> from right */
+    newImage.classList.add(
+      "slide-in-from-right"
+    );
+
+  } else {
+
+    /* current -> right */
+    carImage.classList.add(
+      "slide-out-to-right"
+    );
+
+    /* new -> from left */
+    newImage.classList.add(
+      "slide-in-from-left"
+    );
+
+  }
+
+  carWrapper.appendChild(newImage);
+
+  void newImage.offsetWidth;
+
+  requestAnimationFrame(() => {
+
+    newImage.classList.remove(
+      "slide-in-from-right",
+      "slide-in-from-left"
+    );
+
+    newImage.classList.add(
+      "active-slide"
+    );
+
+  });
+
+
+  setTimeout(() => {
+
+    carImage.remove();
+
+    newImage.id = "car-image";
+
+    newImage.classList.remove(
+      "active-slide"
+    );
+
+    carImage = newImage;
+
+    current = next;
+
+    updateSpecs();
+    updateTabs();
+
+    setTimeout(() => {
+
+      isAnimating = false;
+
+    }, 350);
+
+  }, 700);
+
+}
+
+
+
+/* ================= ARROWS ================= */
+
+/* RIGHT ARROW */
+
+right.addEventListener("touchend", (e) => {
+
+  e.preventDefault();
+
+  if (isAnimating) return;
+
+  changeCar(
+    "prev",
+    (current + 1) % vehicles.length
+  );
+
+});
+
+right.addEventListener("click", (e) => {
+
+  if ("ontouchstart" in window) return;
+
+  if (isAnimating) return;
+
+  changeCar(
+    "prev",
+    (current + 1) % vehicles.length
+  );
+
+});
+
+
+/* LEFT ARROW */
+
+left.addEventListener("touchend", (e) => {
+
+  e.preventDefault();
+
+  if (isAnimating) return;
+
+  changeCar(
+    "next",
+    (current - 1 + vehicles.length) % vehicles.length
+  );
+
+});
+
+left.addEventListener("click", (e) => {
+
+  if ("ontouchstart" in window) return;
+
+  if (isAnimating) return;
+
+  changeCar(
+    "next",
+    (current - 1 + vehicles.length) % vehicles.length
+  );
+
+});
+
+
+
+/* ================= TOUCH SWIPE ================= */
+
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+let isSwiping = false;
+
+let recentlyTouched = false;
+
+
+setTimeout(() => {
+
+  recentlyTouched = false;
+
+}, 300);
+
+
+function handleTouchStart(e) {
+
+  if(isAnimating) return;
+
+  recentlyTouched = true;
+
+  touchStartX =
+    e.touches[0].clientX;
+
+  touchStartY =
+    e.touches[0].clientY;
+
+  isSwiping = true;
+
+}
+
+
+function handleTouchMove(e) {
+
+  if(!isSwiping || isAnimating) return;
+
+  touchEndX =
+    e.touches[0].clientX;
+
+  touchEndY =
+    e.touches[0].clientY;
+
+  const diffX =
+    touchStartX - touchEndX;
+
+  const diffY =
+    touchStartY - touchEndY;
+
+  if(
+    Math.abs(diffX) > Math.abs(diffY) &&
+    Math.abs(diffX) > 10
+  ) {
+
+    e.preventDefault();
+
+  }
+
+}
+
+
+function handleTouchEnd() {
+
+  if(!isSwiping || isAnimating) {
+
+    isSwiping = false;
+    return;
+
+  }
+
+  const diffX =
+    touchStartX - touchEndX;
+
+  const diffY =
+    touchStartY - touchEndY;
+
+  if(
+    Math.abs(diffX) > Math.abs(diffY) &&
+    Math.abs(diffX) > 50
+  ) {
+
+    if(diffX > 0) {
+
+      /* swipe left -> next */
+      if(!isAnimating) {
+        changeCar("next");
+      }
+
+    } else {
+
+      /* swipe right -> prev */
+      if(!isAnimating) {
+        changeCar("prev");
+      }
+
+    }
+
+  }
+
+  touchStartX = 0;
+  touchStartY = 0;
+  touchEndX = 0;
+  touchEndY = 0;
+
+  isSwiping = false;
+
+}
+
+
+
+/* ================= MOUSE DRAG ================= */
+
+let mouseStartX = 0;
+let isMouseDown = false;
+
+
+function handleMouseDown(e) {
+
+  if(isAnimating) return;
+
+  e.preventDefault();
+
+  mouseStartX = e.clientX;
+
+  isMouseDown = true;
+
+  carWrapper.style.cursor =
+    "grabbing";
+
+}
+
+
+function handleMouseMove(e) {
+
+  if(!isMouseDown || isAnimating) return;
+
+  const diffX =
+    mouseStartX - e.clientX;
+
+  if(Math.abs(diffX) > 30) {
+
+    if(diffX > 0) {
+
+      /* drag left -> next */
+      changeCar("next");
+
+    } else {
+
+      /* drag right -> prev */
+      changeCar("prev");
+
+    }
+
+    isMouseDown = false;
+
+    carWrapper.style.cursor =
+      "grab";
+
+  }
+
+}
+
+
+function handleMouseUp() {
+
+  if(isMouseDown) {
+
+    isMouseDown = false;
+
+    carWrapper.style.cursor =
+      "grab";
+
+  }
+
+}
+
+
+
+/* ================= EVENT LISTENERS ================= */
+
+carWrapper.addEventListener(
+  "touchstart",
+  handleTouchStart,
+  { passive: false }
+);
+
+carWrapper.addEventListener(
+  "touchmove",
+  handleTouchMove,
+  { passive: false }
+);
+
+carWrapper.addEventListener(
+  "touchend",
+  handleTouchEnd
+);
+
+carWrapper.addEventListener(
+  "touchcancel",
+  () => {
+
+    isSwiping = false;
+    isMouseDown = false;
+
+  }
+);
+
+carWrapper.addEventListener(
+  "mousedown",
+  handleMouseDown
+);
+
+window.addEventListener(
+  "mousemove",
+  handleMouseMove
+);
+
+window.addEventListener(
+  "mouseup",
+  handleMouseUp
+);
+
+carWrapper.addEventListener(
+  "dragstart",
+  (e) => e.preventDefault()
+);
+
+document.querySelectorAll(
+  ".car-wrapper img"
+).forEach(img => {
+
+  img.addEventListener(
+    "contextmenu",
+    (e) => e.preventDefault()
+  );
+
+});
+
+
+carWrapper.style.cursor = "grab";
+
+updateSpecs();
+
+/*============================ THIS IS END OF THE VEHICLES MODELS LOGIC CODE ===================*/
+
+
+
+
+
+/* ======================= SCROLL NAV BAR ANIMATIONS =================== */
+
+window.addEventListener('scroll', () => {
+
+  const nav =
+    document.querySelector('nav');
+
+  if (window.scrollY > 60) {
+
+    nav.classList.add('scrolled');
+
+  } else {
+
+    nav.classList.remove('scrolled');
+
+  }
+
+  document.querySelectorAll(
+    '.card, .story-card, .house-item'
+  ).forEach(el => {
+
+    const rect =
+      el.getBoundingClientRect();
+
+    if (rect.top < window.innerHeight - 100) {
+
+      el.style.transform =
+        'translateY(0px)';
+
+      el.style.opacity = '1';
+
+    }
+
+  });
+
+});
+
+
+
+document.querySelectorAll(
+  '.card, .story-card, .house-item'
+).forEach(el => {
+
+  el.style.transition = '.8s ease';
+
+  el.style.transform =
+    'translateY(40px)';
+
+  el.style.opacity = '0';
+
+});
+
+</script>
+
+</body>
+</html>
