@@ -1355,10 +1355,10 @@ function withBase(path) {
   return BASE_URL + path.replace(/^\/?/, '');
 }
 
-// Rewrite all video/image sources to be base-url aware
-for (const v of document.querySelectorAll('.hero-video')) {
-  if (v.getAttribute('data-src') !== undefined) continue;
-}
+// Rewrite hero video/model sources to be base-url aware
+activeVideo.src = withBase(heroVideos[0]);
+nextVideo.src = withBase(heroVideos[1]);
+heroModelImage.src = withBase(heroModelImages[0]);
 
 
 // Debug: helps detect missing/blocked video URLs on GitHub Pages
